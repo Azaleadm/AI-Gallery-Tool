@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GalleryReel.ai — Let Your Work Speak for You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #06080d;
+    --surface: #0d1018;
+    --surface2: #141820;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #edeef5;
+    --muted: rgba(237,238,245,0.45);
+    --faint: rgba(237,238,245,0.2);
+    --violet: #9b7ff4;
+    --violet-light: #c4b0ff;
+    --teal: #4fd9aa;
+    --teal-light: #7bedc5;
+    --grad: linear-gradient(135deg, #9b7ff4, #4fd9aa);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(6,8,13,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--violet);
+    color: #1a0f3a !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--violet-light) !important; color: #1a0f3a !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 140px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 60%, rgba(155,127,244,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 75% 30%, rgba(79,217,170,0.09) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 20%, transparent 80%);
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(155,127,244,0.12);
+    border: 0.5px solid rgba(155,127,244,0.35);
+    border-radius: 20px;
+    padding: 7px 16px;
+    font-size: 12px;
+    color: var(--violet-light);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 28px;
+    max-width: 900px;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--muted);
+    max-width: 560px;
+    font-weight: 300;
+    line-height: 1.65;
+    margin-bottom: 48px;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.7s 0.3s ease both;
+    margin-bottom: 72px;
+  }
+
+  .btn-hero {
+    background: var(--violet);
+    color: #1a0f3a;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 32px;
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-hero:hover { background: var(--violet-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 0.5px solid var(--border2);
+    border-radius: 10px;
+    padding: 16px 32px;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.25); color: var(--text); }
+
+  /* URL Demo Bar */
+  .url-demo {
+    width: 100%;
+    max-width: 620px;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 14px;
+    padding: 6px 6px 6px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeUp 0.7s 0.4s ease both;
+    box-shadow: 0 0 60px rgba(155,127,244,0.08);
+  }
+
+  .url-demo input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    font-weight: 300;
+  }
+  .url-demo input::placeholder { color: var(--faint); }
+
+  .url-demo-btn {
+    background: var(--violet);
+    color: #1a0f3a;
+    border: none;
+    border-radius: 9px;
+    padding: 12px 24px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .url-demo-btn:hover { background: var(--violet-light); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SOCIAL PROOF BAR ── */
+  .proof-bar {
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    background: var(--surface);
+    flex-wrap: wrap;
+  }
+
+  .proof-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .proof-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: rgba(155,127,244,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 48px; }
+
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+
+  .section-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    font-weight: 300;
+    line-height: 1.65;
+    margin-bottom: 60px;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-section {
+    background: var(--surface);
+  }
+
+  .how-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .how-left { position: sticky; top: 120px; }
+
+  .steps-list { display: flex; flex-direction: column; gap: 0; }
+
+  .step-item {
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .step-item:last-child { border-bottom: none; }
+  .step-item:hover { opacity: 0.85; }
+
+  .step-num-box {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: rgba(155,127,244,0.1);
+    border: 0.5px solid rgba(155,127,244,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--violet);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-item.active .step-num-box {
+    background: var(--violet);
+    color: #1a0f3a;
+    border-color: var(--violet);
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: rgba(237,238,245,0.6);
+  }
+  .step-item.active .step-title { color: var(--text); }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--faint);
+    line-height: 1.6;
+  }
+  .step-item.active .step-desc { color: var(--muted); }
+
+  .step-visual {
+    background: var(--surface2);
+    border: 0.5px solid var(--border2);
+    border-radius: 20px;
+    min-height: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .visual-panel { display: none; width: 100%; text-align: center; }
+  .visual-panel.active { display: flex; flex-direction: column; align-items: center; }
+
+  .mock-url-bar {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--faint);
+    width: 100%;
+    text-align: left;
+    margin-bottom: 16px;
+    font-family: monospace;
+  }
+
+  .mock-url-bar span { color: var(--violet-light); }
+
+  .progress-steps {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .prog-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .prog-check {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(79,217,170,0.15);
+    border: 0.5px solid rgba(79,217,170,0.4);
+    color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .thumb-grid-small {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .thumb-s {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+  }
+
+  .thumb-s-l { position:absolute;left:0;top:0;bottom:0;width:50%; }
+  .thumb-s-r { position:absolute;right:0;top:0;bottom:0;width:50%; }
+  .thumb-s-div { position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(255,255,255,0.15); }
+
+  .hipaa-tag {
+    background: rgba(79,217,170,0.1);
+    border: 0.5px solid rgba(79,217,170,0.3);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 500;
+    margin-bottom: 12px;
+    display: inline-block;
+  }
+
+  .phone-mockup {
+    width: 140px;
+    aspect-ratio: 9/16;
+    border-radius: 20px;
+    background: #0a0c12;
+    border: 0.5px solid var(--border2);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .phone-top { height: 50%; background: linear-gradient(180deg,#2a1e4a,#1a1030); }
+  .phone-bot { height: 50%; background: linear-gradient(0deg,#1e3a2a,#102818); }
+  .phone-line { height: 1px; background: rgba(255,255,255,0.2); }
+
+  .phone-badge {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    background: var(--violet);
+    color: #1a0f3a;
+    font-size: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
+
+  .phone-caption {
+    position: absolute;
+    bottom: 12px; left: 10px; right: 10px;
+    font-size: 8px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .social-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .sdot {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+
+  .sdot.live {
+    background: rgba(79,217,170,0.1);
+    border-color: rgba(79,217,170,0.3);
+  }
+
+  /* ── FEATURES ── */
+  .features-section { max-width: 1100px; margin: 0 auto; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .feature-card {
+    background: var(--surface);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+  .feature-card:hover { background: var(--surface2); }
+
+  .feat-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(155,127,244,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .feat-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
+
+  .feat-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── VS SECTION ── */
+  .vs-section {
+    background: var(--surface);
+  }
+
+  .vs-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .vs-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 0.5px solid var(--border);
+  }
+
+  .vs-table th {
+    padding: 18px 24px;
+    text-align: left;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    background: var(--surface2);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .vs-table th:nth-child(2) { color: var(--muted); }
+  .vs-table th:nth-child(3) { color: var(--violet); background: rgba(155,127,244,0.08); }
+
+  .vs-table td {
+    padding: 16px 24px;
+    font-size: 14px;
+    border-bottom: 0.5px solid var(--border);
+    color: var(--muted);
+  }
+
+  .vs-table td:nth-child(3) {
+    background: rgba(155,127,244,0.04);
+    color: var(--teal);
+    font-weight: 500;
+  }
+
+  .vs-table tr:last-child td { border-bottom: none; }
+
+  .check-teal { color: var(--teal); font-size: 16px; }
+  .cross-red { color: rgba(255,100,100,0.6); font-size: 16px; }
+
+  /* ── PRICING ── */
+  .pricing-section { max-width: 1000px; margin: 0 auto; text-align: center; }
+
+  .pricing-toggle {
+    display: inline-flex;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 48px;
+    gap: 4px;
+  }
+
+  .toggle-btn {
+    padding: 9px 20px;
+    border-radius: 7px;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .toggle-btn.active { background: var(--surface2); color: var(--text); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .price-card {
+    background: var(--surface);
+    padding: 36px 28px;
+    text-align: left;
+    position: relative;
+  }
+
+  .price-card.featured {
+    background: rgba(155,127,244,0.07);
+  }
+
+  .price-badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: var(--violet);
+    color: #1a0f3a;
+    font-size: 10px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .price-plan {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .price-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .price-period { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+
+  .price-desc {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .price-features { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 10px; }
+
+  .price-features li {
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pf-check {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(79,217,170,0.15);
+    color: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .price-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .price-btn-outline {
+    background: none;
+    border: 0.5px solid var(--border2);
+    color: var(--text);
+  }
+  .price-btn-outline:hover { border-color: rgba(255,255,255,0.3); }
+
+  .price-btn-fill {
+    background: var(--violet);
+    border: none;
+    color: #1a0f3a;
+  }
+  .price-btn-fill:hover { background: var(--violet-light); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section {
+    background: var(--surface);
+  }
+
+  .test-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .test-card {
+    background: var(--surface2);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .test-stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 16px;
+    color: #f5b840;
+    font-size: 14px;
+  }
+
+  .test-text {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .test-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .test-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .test-name { font-size: 13px; font-weight: 500; }
+  .test-role { font-size: 12px; color: var(--faint); }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+    padding: 120px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(155,127,244,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-section p {
+    font-size: 18px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--faint);
+    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { color: var(--faint); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--muted); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── STAT BELT ── */
+  .stat-belt {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .stat-cell {
+    background: var(--surface);
+    padding: 40px 32px;
+    text-align: center;
+  }
+
+  .stat-big {
+    font-family: 'Syne', sans-serif;
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: -2px;
+    background: var(--grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label-cell {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section { padding: 60px 20px; }
+    .how-inner { grid-template-columns: 1fr; gap: 40px; }
+    .how-left { position: static; }
+    .features-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .test-grid { grid-template-columns: 1fr; }
+    .stat-belt { grid-template-columns: repeat(2,1fr); }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">gallereel.ai</a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#" class="nav-cta">Get early access</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Now in early access — HIPAA-compliant &amp; AI-powered
+  </div>
+
+  <h1>Let your work<br><em>speak for you.</em></h1>
+
+  <p class="hero-sub">
+    Paste any before &amp; after gallery URL. Our AI scrapes, censors, captions, and publishes a social-ready reel to every platform — in under 30 seconds.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-hero">Start free trial</a>
+    <a href="#how" class="btn-ghost">See how it works →</a>
+  </div>
+
+  <div class="url-demo">
+    <input type="text" placeholder="Paste your gallery URL here…" id="hero-url" />
+    <button class="url-demo-btn" onclick="document.getElementById('hero-url').value='https://luminaryaesthetics.com/rhinoplasty-gallery'">Try a demo URL</button>
+  </div>
+</section>
+
+<!-- PROOF BAR -->
+<div class="proof-bar">
+  <div class="proof-item">
+    <div class="proof-icon">🔒</div>
+    HIPAA-compliant by design
+  </div>
+  <div class="proof-item">
+    <div class="proof-icon">⚡</div>
+    Reel ready in &lt;30 seconds
+  </div>
+  <div class="proof-item">
+    <div class="proof-icon">📱</div>
+    Posts to Instagram, TikTok, YouTube &amp; Facebook
+  </div>
+  <div class="proof-item">
+    <div class="proof-icon">🤖</div>
+    AI captions &amp; SEO built-in
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stat-belt">
+  <div class="stat-cell reveal">
+    <div class="stat-big">40k+</div>
+    <div class="stat-label-cell">Aesthetic practices in the U.S.</div>
+  </div>
+  <div class="stat-cell reveal">
+    <div class="stat-big">75%</div>
+    <div class="stat-label-cell">of patients influenced by before/after images</div>
+  </div>
+  <div class="stat-cell reveal">
+    <div class="stat-big">5hrs</div>
+    <div class="stat-label-cell">saved per case vs. manual workflow</div>
+  </div>
+  <div class="stat-cell reveal">
+    <div class="stat-big">1-click</div>
+    <div class="stat-label-cell">publish to all platforms simultaneously</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="how-inner">
+    <div class="how-left">
+      <div class="section-label">How it works</div>
+      <h2 class="section-title">Four steps.<br>One reel.</h2>
+      <p class="section-sub">What used to take 5 tools and half a day now takes 30 seconds.</p>
+
+      <div class="steps-list">
+        <div class="step-item active" onclick="setStep(1)">
+          <div class="step-num-box">1</div>
+          <div>
+            <div class="step-title">Paste your gallery URL</div>
+            <div class="step-desc">Any existing before &amp; after page on your site. We handle the scraping.</div>
+          </div>
+        </div>
+        <div class="step-item" onclick="setStep(2)">
+          <div class="step-num-box">2</div>
+          <div>
+            <div class="step-title">AI reviews &amp; censors</div>
+            <div class="step-desc">Images are auto-censored, patient info removed, HIPAA compliance verified.</div>
+          </div>
+        </div>
+        <div class="step-item" onclick="setStep(3)">
+          <div class="step-num-box">3</div>
+          <div>
+            <div class="step-title">Reel is generated</div>
+            <div class="step-desc">AI writes captions, overlays, and formats a vertical short-form video.</div>
+          </div>
+        </div>
+        <div class="step-item" onclick="setStep(4)">
+          <div class="step-num-box">4</div>
+          <div>
+            <div class="step-title">One-click publish</div>
+            <div class="step-desc">Post to Instagram Reels, TikTok, YouTube Shorts &amp; Facebook simultaneously.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-visual">
+      <!-- Step 1 visual -->
+      <div class="visual-panel active" id="v1">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Paste your gallery link</div>
+        <div class="mock-url-bar">https://<span>luminaryaesthetics.com</span>/rhinoplasty-gallery</div>
+        <div style="display:flex;justify-content:center;margin-top:8px;">
+          <div style="background:var(--violet);color:#1a0f3a;border-radius:8px;padding:12px 28px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;">Scrape gallery →</div>
+        </div>
+        <div style="margin-top:32px;padding-top:24px;border-top:0.5px solid var(--border);width:100%;">
+          <div style="font-size:12px;color:var(--faint);text-align:center;margin-bottom:12px;">Supports any website platform</div>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+            <span style="font-size:11px;padding:5px 10px;border-radius:6px;border:0.5px solid var(--border);color:var(--faint);">WordPress</span>
+            <span style="font-size:11px;padding:5px 10px;border-radius:6px;border:0.5px solid var(--border);color:var(--faint);">Wix</span>
+            <span style="font-size:11px;padding:5px 10px;border-radius:6px;border:0.5px solid var(--border);color:var(--faint);">Webflow</span>
+            <span style="font-size:11px;padding:5px 10px;border-radius:6px;border:0.5px solid var(--border);color:var(--faint);">Squarespace</span>
+            <span style="font-size:11px;padding:5px 10px;border-radius:6px;border:0.5px solid var(--border);color:var(--faint);">PatientPop</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 visual -->
+      <div class="visual-panel" id="v2">
+        <div class="hipaa-tag">✓ HIPAA Compliant</div>
+        <div class="thumb-grid-small" style="max-width:280px;margin:0 auto 16px;">
+          <div class="thumb-s">
+            <div class="thumb-s-l" style="background:linear-gradient(135deg,#2a1e4a,#1a1030)"></div>
+            <div class="thumb-s-div"></div>
+            <div class="thumb-s-r" style="background:linear-gradient(135deg,#1e3a2a,#102818)"></div>
+          </div>
+          <div class="thumb-s">
+            <div class="thumb-s-l" style="background:linear-gradient(135deg,#3a2a1e,#2a1a10)"></div>
+            <div class="thumb-s-div"></div>
+            <div class="thumb-s-r" style="background:linear-gradient(135deg,#1e2a3a,#102030)"></div>
+          </div>
+          <div class="thumb-s">
+            <div class="thumb-s-l" style="background:linear-gradient(135deg,#4a1e1e,#301010)"></div>
+            <div class="thumb-s-div"></div>
+            <div class="thumb-s-r" style="background:linear-gradient(135deg,#1e4a3a,#103028)"></div>
+          </div>
+        </div>
+        <div class="progress-steps">
+          <div class="prog-row"><div class="prog-check">✓</div>6 image pairs extracted</div>
+          <div class="prog-row"><div class="prog-check">✓</div>Patient identifiers removed</div>
+          <div class="prog-row"><div class="prog-check">✓</div>2 images auto-blurred</div>
+          <div class="prog-row"><div class="prog-check">✓</div>HIPAA audit log created</div>
+        </div>
+      </div>
+
+      <!-- Step 3 visual -->
+      <div class="visual-panel" id="v3">
+        <div class="phone-mockup">
+          <div class="phone-top"></div>
+          <div class="phone-line"></div>
+          <div class="phone-bot"></div>
+          <div class="phone-badge">Before → After</div>
+          <div class="phone-caption">Rhinoplasty by Dr. Chen<br>Luminary Aesthetics, Austin TX</div>
+        </div>
+        <div style="font-size:12px;color:var(--teal);margin-bottom:8px;">AI-generated caption</div>
+        <div style="font-size:12px;color:var(--muted);text-align:center;max-width:240px;line-height:1.6;font-style:italic;">"Natural rhinoplasty results at Luminary Aesthetics. Book your consultation — link in bio."</div>
+        <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;justify-content:center;">
+          <span style="font-size:10px;padding:3px 8px;border-radius:10px;background:rgba(155,127,244,0.1);border:0.5px solid rgba(155,127,244,0.25);color:var(--violet);">#rhinoplasty</span>
+          <span style="font-size:10px;padding:3px 8px;border-radius:10px;background:rgba(155,127,244,0.1);border:0.5px solid rgba(155,127,244,0.25);color:var(--violet);">#beforeandafter</span>
+          <span style="font-size:10px;padding:3px 8px;border-radius:10px;background:rgba(155,127,244,0.1);border:0.5px solid rgba(155,127,244,0.25);color:var(--violet);">#austintx</span>
+        </div>
+      </div>
+
+      <!-- Step 4 visual -->
+      <div class="visual-panel" id="v4">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Publishing to all platforms…</div>
+        <div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:280px;margin:0 auto 20px;">
+          <div style="display:flex;align-items:center;gap:12px;background:rgba(79,217,170,0.07);border:0.5px solid rgba(79,217,170,0.25);border-radius:10px;padding:14px 16px;">
+            <span style="font-size:18px;">📸</span>
+            <span style="font-size:13px;color:var(--text);">Instagram Reels</span>
+            <span style="margin-left:auto;font-size:11px;color:var(--teal);">✓ Live</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;background:rgba(79,217,170,0.07);border:0.5px solid rgba(79,217,170,0.25);border-radius:10px;padding:14px 16px;">
+            <span style="font-size:18px;">🎵</span>
+            <span style="font-size:13px;color:var(--text);">TikTok</span>
+            <span style="margin-left:auto;font-size:11px;color:var(--teal);">✓ Live</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.03);border:0.5px solid var(--border);border-radius:10px;padding:14px 16px;">
+            <span style="font-size:18px;">▶</span>
+            <span style="font-size:13px;color:var(--muted);">YouTube Shorts</span>
+            <span style="margin-left:auto;font-size:11px;color:var(--faint);">Connect →</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--faint);">Link back to your gallery for SEO + lead capture</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="features-section">
+    <div style="text-align:center;margin-bottom:60px;" class="reveal">
+      <div class="section-label">Built for aesthetic practices</div>
+      <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feat-icon">🔒</div>
+        <div class="feat-title">HIPAA-compliant AI</div>
+        <div class="feat-desc">Patient identifiers are automatically removed. Nudity is detected and blurred. A full audit log is generated for every case.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🤖</div>
+        <div class="feat-title">AI caption engine</div>
+        <div class="feat-desc">GPT-powered captions, SEO titles, hashtags, and CTAs — all generated from your existing gallery content.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🎬</div>
+        <div class="feat-title">Auto video builder</div>
+        <div class="feat-desc">Before &amp; after photos are formatted into a vertical short-form reel with branded overlays, transitions, and your logo.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">📱</div>
+        <div class="feat-title">One-click multi-posting</div>
+        <div class="feat-desc">Connect Instagram, TikTok, YouTube, and Facebook once. Publish everywhere simultaneously with a single click.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">🌐</div>
+        <div class="feat-title">SEO gallery builder</div>
+        <div class="feat-desc">Build HIPAA-compliant, SEO-optimized galleries from scratch with our 4-step tool — no website platform restrictions.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">Analytics &amp; insights</div>
+        <div class="feat-desc">Track views, saves, reach, and website traffic from each reel. Know exactly what content drives leads.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VS SECTION -->
+<section class="vs-section">
+  <div class="vs-inner">
+    <div style="text-align:center;margin-bottom:52px;" class="reveal">
+      <div class="section-label">The old way vs. GalleryReel</div>
+      <h2 class="section-title">Replace 5 tools.<br>Save 5 hours.</h2>
+    </div>
+    <table class="vs-table reveal">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Manual workflow</th>
+          <th>GalleryReel.ai</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Scrape &amp; collect images</td>
+          <td><span class="cross-red">✗</span> Human, 30–60 min</td>
+          <td><span class="check-teal">✓</span> Automatic, 5 sec</td>
+        </tr>
+        <tr>
+          <td>HIPAA censorship</td>
+          <td><span class="cross-red">✗</span> Runway AI, manual review</td>
+          <td><span class="check-teal">✓</span> AI auto-blur + audit log</td>
+        </tr>
+        <tr>
+          <td>Video creation</td>
+          <td><span class="cross-red">✗</span> Canva / editor, 1–2 hrs</td>
+          <td><span class="check-teal">✓</span> Generated instantly</td>
+        </tr>
+        <tr>
+          <td>Caption writing</td>
+          <td><span class="cross-red">✗</span> Manual, inconsistent</td>
+          <td><span class="check-teal">✓</span> AI from gallery content</td>
+        </tr>
+        <tr>
+          <td>Multi-platform posting</td>
+          <td><span class="cross-red">✗</span> Quso / CaptionsAI + time</td>
+          <td><span class="check-teal">✓</span> One click, all platforms</td>
+        </tr>
+        <tr>
+          <td>Total time per case</td>
+          <td>3–5 hours</td>
+          <td style="color:var(--teal);font-weight:600;">Under 30 seconds</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="pricing-section reveal">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Simple, scalable pricing.</h2>
+    <p class="section-sub" style="margin:0 auto 32px;">Start free. Scale as you grow. Cancel anytime.</p>
+
+    <div class="pricing-toggle">
+      <button class="toggle-btn active" id="monthly-btn" onclick="setMonthly()">Monthly</button>
+      <button class="toggle-btn" id="annual-btn" onclick="setAnnual()">Annual <span style="color:var(--teal);font-size:11px;"> save 15%</span></button>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-plan">Starter</div>
+        <div class="price-num" id="p1">$49</div>
+        <div class="price-period">per month</div>
+        <div class="price-desc">For small practices just getting started with social content.</div>
+        <ul class="price-features">
+          <li><div class="pf-check">✓</div>10 reels per month</li>
+          <li><div class="pf-check">✓</div>4-step gallery builder</li>
+          <li><div class="pf-check">✓</div>AI captions &amp; tags</li>
+          <li><div class="pf-check">✓</div>HIPAA-compliant</li>
+          <li><div class="pf-check">✓</div>2 social accounts</li>
+        </ul>
+        <button class="price-btn price-btn-outline">Get started</button>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">MOST POPULAR</div>
+        <div class="price-plan">Pro</div>
+        <div class="price-num" id="p2">$199</div>
+        <div class="price-period">per month</div>
+        <div class="price-desc">For active practices with large existing gallery archives.</div>
+        <ul class="price-features">
+          <li><div class="pf-check">✓</div>50 reels per month</li>
+          <li><div class="pf-check">✓</div>URL gallery scraper</li>
+          <li><div class="pf-check">✓</div>Auto-censorship engine</li>
+          <li><div class="pf-check">✓</div>Full SEO optimization</li>
+          <li><div class="pf-check">✓</div>All 4 social platforms</li>
+          <li><div class="pf-check">✓</div>Analytics dashboard</li>
+        </ul>
+        <button class="price-btn price-btn-fill">Start free trial</button>
+      </div>
+      <div class="price-card">
+        <div class="price-plan">Enterprise</div>
+        <div class="price-num">Custom</div>
+        <div class="price-period">contact us</div>
+        <div class="price-desc">For agencies and high-volume practices with advanced needs.</div>
+        <ul class="price-features">
+          <li><div class="pf-check">✓</div>Unlimited reels</li>
+          <li><div class="pf-check">✓</div>White-label option</li>
+          <li><div class="pf-check">✓</div>API access</li>
+          <li><div class="pf-check">✓</div>Team seats</li>
+          <li><div class="pf-check">✓</div>Dedicated onboarding</li>
+          <li><div class="pf-check">✓</div>Custom integrations</li>
+        </ul>
+        <button class="price-btn price-btn-outline">Talk to us</button>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--faint);margin-top:20px;">All plans include HIPAA compliance, SSL encryption, and a 14-day free trial.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:52px;" class="reveal">
+      <div class="section-label">Early feedback</div>
+      <h2 class="section-title">Practices love it.</h2>
+    </div>
+    <div class="test-grid reveal">
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <div class="test-text">"This tool saved our marketing team hours every single week. We're posting more consistently than ever and seeing more leads from Reels."</div>
+        <div class="test-author">
+          <div class="test-avatar" style="background:rgba(155,127,244,0.15);color:var(--violet);">MC</div>
+          <div>
+            <div class="test-name">Dr. Maya Chen</div>
+            <div class="test-role">Plastic Surgeon, Beverly Hills</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <div class="test-text">"We had hundreds of B/A galleries sitting on our site doing nothing. GalleryReel turned them into a content engine overnight. Game changer."</div>
+        <div class="test-author">
+          <div class="test-avatar" style="background:rgba(79,217,170,0.15);color:var(--teal);">JT</div>
+          <div>
+            <div class="test-name">Jessica Torres</div>
+            <div class="test-role">Marketing Director, Radiance Med Spa</div>
+          </div>
+        </div>
+      </div>
+      <div class="test-card">
+        <div class="test-stars">★★★★★</div>
+        <div class="test-text">"The HIPAA compliance piece alone sold me. I can finally automate my social content without worrying about patient privacy violations."</div>
+        <div class="test-author">
+          <div class="test-avatar" style="background:rgba(155,127,244,0.1);color:var(--violet-light);">DR</div>
+          <div>
+            <div class="test-name">Dr. Ryan Patel</div>
+            <div class="test-role">Dermatologist, Austin TX</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="section-label" style="position:relative;">Get started today</div>
+  <h2 style="position:relative;">Your galleries are<br><em style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-style:normal;">already the content.</em></h2>
+  <p style="position:relative;">Stop leaving patient results on the table. Turn them into leads — automatically.</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;">
+    <a href="#" class="btn-hero" style="font-size:17px;padding:18px 40px;">Start your free trial</a>
+    <a href="#" class="btn-ghost" style="font-size:15px;padding:18px 32px;">Book a demo →</a>
+  </div>
+  <p style="font-size:13px;color:var(--faint);margin-top:20px;position:relative;">No credit card required · 14-day free trial · Cancel anytime</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="nav-logo" style="font-size:17px;">gallereel.ai</a>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">HIPAA Policy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+  <div style="color:var(--faint);font-size:13px;">© 2025 GalleryReel.ai — All rights reserved</div>
+</footer>
+
+<script>
+// Step switcher
+function setStep(n) {
+  document.querySelectorAll('.step-item').forEach((el, i) => {
+    el.classList.toggle('active', i === n - 1);
+  });
+  document.querySelectorAll('.visual-panel').forEach((el, i) => {
+    el.classList.toggle('active', i === n - 1);
+  });
+}
+
+// Pricing toggle
+var isAnnual = false;
+var prices = { p1: [49, 42], p2: [199, 169] };
+
+function setMonthly() {
+  isAnnual = false;
+  document.getElementById('monthly-btn').classList.add('active');
+  document.getElementById('annual-btn').classList.remove('active');
+  document.getElementById('p1').textContent = '$49';
+  document.getElementById('p2').textContent = '$199';
+}
+
+function setAnnual() {
+  isAnnual = true;
+  document.getElementById('annual-btn').classList.add('active');
+  document.getElementById('monthly-btn').classList.remove('active');
+  document.getElementById('p1').textContent = '$42';
+  document.getElementById('p2').textContent = '$169';
+}
+
+// Scroll reveal
+var reveals = document.querySelectorAll('.reveal');
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+reveals.forEach(function(el) { observer.observe(el); });
+</script>
+</body>
+</html>
